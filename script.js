@@ -26,8 +26,9 @@ rootElement.addEventListener('mouseover', (event) => {
     if (!bookModal) {
       renderBookModal();
     }
+    showModal(event);
   } else {
-    console.log('muspekare INTE över en bok, dölj modal');
+    hideModal();
   }
 })
 
@@ -54,4 +55,19 @@ function renderBookModal() {
   root.appendChild(modal);
 
   bookModal = modal;
+}
+
+function showModal(event) {
+  bookModal.innerText = '';
+  bookModal.style.display = 'block';
+  bookModal.style.left = event.clientX + 'px';
+  bookModal.style.top = event.clientY + 'px';
+}
+
+function hideModal() {
+  if (!bookModal) {
+    return;
+  }
+  bookModal.innerText = '';
+  bookModal.style.display = 'none';
 }
