@@ -21,12 +21,22 @@ searchField.addEventListener('keyup', (e) =>
 
 const rootElement = document.getElementById('root');
 rootElement.addEventListener('mouseover', (event) => {
+  if (event.target.id === 'bookDetails' || 
+      event.target.className.includes('book-details') ||
+      event.target.tagName === 'STRONG') {
+    return;
+  }
   const bookId = +event.target.dataset.bookId;
   if (bookId > 0) {
     if (!bookModal) {
       renderBookModal();
     }
-    showModal(event);
+
+    getById(bookId).then(apiBook => {
+      bookModal.innerText = '';
+      bookModal.insertAdjacentHTML('beforeend', BookDetails(apiBook));
+      showModal(event);
+    });
   } else {
     hideModal();
   }
@@ -43,12 +53,12 @@ function renderBookList(bookList) {
 
 function renderBookModal() {
   //<div id="bookDetails"
-  //     className="book-details absolute p-3 rounded-md border-2 border-blue-400 bg-white"
+  //     className="absolute p-3 rounded-md border-2 border-blue-400 bg-emerald-200"
   //     style="display: none">
   //</div>
   const modal = document.createElement('div');
   modal.id = 'bookDetails';
-  modal.className = 'book-details absolute p-3 rounded-md border-2 border-blue-400 bg-white';
+  modal.className = 'absolute p-3 rounded-md border-2 border-blue-400 bg-emerald-200';
   modal.style.display = 'none';
 
   const root = document.getElementById('root');
@@ -58,7 +68,6 @@ function renderBookModal() {
 }
 
 function showModal(event) {
-  bookModal.innerText = '';
   bookModal.style.display = 'block';
   bookModal.style.left = event.clientX + 'px';
   bookModal.style.top = event.clientY + 'px';
@@ -68,6 +77,5 @@ function hideModal() {
   if (!bookModal) {
     return;
   }
-  bookModal.innerText = '';
   bookModal.style.display = 'none';
 }
