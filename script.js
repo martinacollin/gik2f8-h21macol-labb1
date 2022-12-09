@@ -1,6 +1,7 @@
 'use strict';
 
 let bookList = [];
+let bookModal;
 
 window.addEventListener('load', () => {
   getAll().then((apiBooks) => (bookList = apiBooks));
@@ -22,13 +23,13 @@ const rootElement = document.getElementById('root');
 rootElement.addEventListener('mouseover', (event) => {
   const bookId = +event.target.dataset.bookId;
   if (bookId > 0) {
-    console.log('muspekare över bok: ' + bookId);
+    if (!bookModal) {
+      renderBookModal();
+    }
   } else {
-    console.log('muspekare INTE över en bok');
+    console.log('muspekare INTE över en bok, dölj modal');
   }
 })
-
-
 
 function renderBookList(bookList) {
   const existingElement = document.querySelector('.book-list');
@@ -37,4 +38,20 @@ function renderBookList(bookList) {
 
   existingElement && root.removeChild(existingElement);
   bookList.length > 0 && searchField.value && root.insertAdjacentHTML('beforeend', BookList(bookList));
+}
+
+function renderBookModal() {
+  //<div id="bookDetails"
+  //     className="book-details absolute p-3 rounded-md border-2 border-blue-400 bg-white"
+  //     style="display: none">
+  //</div>
+  const modal = document.createElement('div');
+  modal.id = 'bookDetails';
+  modal.className = 'book-details absolute p-3 rounded-md border-2 border-blue-400 bg-white';
+  modal.style.display = 'none';
+
+  const root = document.getElementById('root');
+  root.appendChild(modal);
+
+  bookModal = modal;
 }
