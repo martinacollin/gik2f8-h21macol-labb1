@@ -18,6 +18,18 @@ searchField.addEventListener('keyup', (e) =>
   )
 );
 
+const rootElement = document.getElementById('root');
+rootElement.addEventListener('mouseover', (event) => {
+  const bookId = +event.target.dataset.bookId;
+  if (bookId > 0) {
+    console.log('muspekare över bok: ' + bookId);
+  } else {
+    console.log('muspekare INTE över en bok');
+  }
+})
+
+
+
 function renderBookList(bookList) {
   const existingElement = document.querySelector('.book-list');
 
