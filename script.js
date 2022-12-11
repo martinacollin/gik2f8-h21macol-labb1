@@ -58,7 +58,7 @@ function renderBookModal() {
   //</div>
   const modal = document.createElement('div');
   modal.id = 'bookDetails';
-  modal.className = 'absolute p-3 rounded-md border-2 border-blue-400 bg-emerald-200';
+  modal.className = 'absolute p-3 rounded-md border-2 border-emerald-800 bg-white';
   modal.style.display = 'none';
 
   const root = document.getElementById('root');
